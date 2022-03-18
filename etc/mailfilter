@@ -3,4 +3,4 @@ logfile "/var/log/getmail/getmail.log"
 TARGET=$1
 log "TARGET: $TARGET"
 
-to "/app/Maildirs/$TARGET/"
+to "$TARGET"

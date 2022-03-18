@@ -20,5 +20,5 @@ arguments = ( '-p', '-e', '-u' )
 [destination]
 type = MDA_external
 path = /usr/bin/maildrop
-arguments = ( "/home/getmail/.mailfilter", "johndoe" )
+arguments = ( "/home/getmail/.mailfilter", "/app/Maildirs/johndoe/Maildir/" )
 unixfrom = true
