@@ -1,0 +1,24 @@
+[options]
+delete = 0
+# delete_after = 3
+message_log = /var/log/getmail/getmail.log
+read_all = false
+received = true
+delivered_to = true
+
+[retriever]
+type = SimplePOP3SSLRetriever
+server = mail.example.com
+username = johndoe
+password = secret
+
+[filter-1]
+type = Filter_external
+path = /usr/bin/bogofilter
+arguments = ( '-p', '-e', '-u' )
+
+[destination]
+type = MDA_external
+path = /usr/bin/maildrop
+arguments = ( "/home/getmail/.mailfilter", "johndoe" )
+unixfrom = true

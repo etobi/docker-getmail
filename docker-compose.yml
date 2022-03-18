@@ -1,0 +1,12 @@
+---
+version: '3'
+services:
+  getmailer:
+    build: ./
+    container_name: getmailer
+    restart: unless-stopped
+    volumes:
+      - ./data/getmail/:/app/getmail/
+      - ./data/bogofilter/:/app/bogofilter/
+      - ./config/:/app/getmailrc/
+      - ./Maildirs/:/app/Maildirs/
