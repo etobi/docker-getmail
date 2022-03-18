@@ -281,10 +281,7 @@
 ##token_count_min=0			# default
 ##token_count_max=0			# default
 
-
-spam_subject_tag=***BOGO-SPAM***
-unsure_subject_tag=***BOGO-UNSURE***
-spamicity_tags = Yes, No, Unsure
+spam_subject_tag=
+unsure_subject_tag=
+spamicity_tags = Spam, Ham, Unsure
 spamicity_formats = %0.6f, %0.6f, %0.6f
-
-
