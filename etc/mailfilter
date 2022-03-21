@@ -1,15 +1,15 @@
 logfile "/var/log/getmail/getmail.log"
 
-DEFAULT=$1
-log "DEFAULT: $DEFAULT"
+TARGET=$1
+log "TARGET: $TARGET"
 
 if (/^X-Spam: *Yes/)
 {
-    to $DEFAULT/9_SPAM/
+    to $TARGET/.9_SPAM/
 }
 if (/^X-Bogosity: *Spam/)
 {
-    to $DEFAULT/9_SPAM/
+    to $TARGET/.9_SPAM/
 }
 
-to "$DEFAULT"
+to "$TARGET"
