@@ -22,11 +22,13 @@ fi
 
 echo $$ > /tmp/rungetmail.lock
 
-mkdir -p $HOME/.getmail/
-
 for RCFILE in $(ls -1 ${GETMAILDIR}/*.getmailrc); do
   echo `timestamp` $RCFILE
-  /usr/bin/timeout -k 15m 10m /usr/bin/getmail --verbose --rcfile $RCFILE
+  /usr/bin/timeout -k 15m 10m \
+    /usr/bin/getmail \
+    --getmaildir /app/getmail \
+    --verbose \
+    --rcfile $RCFILE
   STATUS=$?
   if [ $STATUS -gt 0 ]; then
     echo `timestamp` getmail $RCFILE failed with status $STATUS

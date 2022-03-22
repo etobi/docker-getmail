@@ -1,12 +1,19 @@
 ---
 version: '3'
 services:
-  getmailer:
+  mail:
     build: ./
-    container_name: getmailer
+#     user: "1000:1000"
+    container_name: mail
     restart: unless-stopped
+    ports:
+      - 993:993
+      - 587:587
+      - 4190:4190
     volumes:
       - ./data/getmail/:/app/getmail/
       - ./data/bogofilter/:/app/bogofilter/
-      - ./config/:/app/getmailrc/
-      - ./Maildirs/:/app/Maildirs/
+      - ./getmailrc/:/app/getmailrc/
+      - ./dovecot/:/etc/dovecot
+      # - ./letsencrypt/config/etc/letsencrypt:/etc/letsencrypt
+      - ./mails/:/srv/mail/

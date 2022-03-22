@@ -285,3 +285,5 @@ spam_subject_tag=
 unsure_subject_tag=
 spamicity_tags = Spam, Ham, Unsure
 spamicity_formats = %0.6f, %0.6f, %0.6f
+
+bogofilter_dir=/app/bogofilter

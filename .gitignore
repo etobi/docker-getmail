@@ -1,7 +1,10 @@
 .idea/
-/config/*.getmailrc
+
+/dovecot/*
+/getmailrc/*.getmailrc
 /data/bogofilter/wordlist.db
 /data/getmail/oldmail*
-/Maildirs/*
-!/Maildirs/.gitkeep
-!/Maildirs/johndoe
+/mails/*
+!/mails/johndoe
+
+!.gitkeep
