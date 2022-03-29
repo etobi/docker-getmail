@@ -18,7 +18,7 @@ fi
 
 echo $$ > ${LOCKFILE}
 
-echo Learn Not spam
+echo Learn ${MAILDIRUSER} Not spam
 (doveadm mailbox create -u ${MAILDIRUSER} learn_notspam || true) > /dev/null 2>&1
 (doveadm mailbox create -u ${MAILDIRUSER} learn_notspam/processing || true) > /dev/null 2>&1
 doveadm move -u ${MAILDIRUSER} learn_notspam/processing mailbox learn_notspam ALL
@@ -30,7 +30,7 @@ doveadm flags add -u ${MAILDIRUSER} '\Seen' mailbox learn_notspam/processing ALL
   /srv/mail/${MAILDIRUSER}/Maildir/.learn_notspam.processing/{cur,new}/
 doveadm move -u ${MAILDIRUSER} INBOX mailbox learn_notspam/processing ALL
 
-echo Learn spam
+echo Learn ${MAILDIRUSER} spam
 (doveadm mailbox create -u ${MAILDIRUSER} Junk || true) > /dev/null 2>&1
 (doveadm mailbox create -u ${MAILDIRUSER} learn_spam || true) > /dev/null 2>&1
 (doveadm mailbox create -u ${MAILDIRUSER} learn_spam/processing || true) > /dev/null 2>&1
@@ -43,7 +43,7 @@ doveadm flags add -u ${MAILDIRUSER} '\Seen' mailbox learn_spam/processing ALL
   /srv/mail/${MAILDIRUSER}/Maildir/.learn_spam.processing/{cur,new}/
 doveadm move -u ${MAILDIRUSER} Junk mailbox learn_spam/processing ALL
 
-echo delete old spam
+echo delete ${MAILDIRUSER} old spam
 doveadm expunge -u ${MAILDIRUSER} mailbox Junk savedbefore 60d
 
 rm ${LOCKFILE}

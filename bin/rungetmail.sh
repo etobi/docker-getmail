@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GETMAILDIR="/app/getmailrc/"
+GETMAILDIR="/app/getmailrc"
 
 timestamp()
 {
