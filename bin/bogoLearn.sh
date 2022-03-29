@@ -23,7 +23,7 @@ echo Learn Not spam
 (doveadm mailbox create -u ${MAILDIRUSER} learn_notspam/processing || true) > /dev/null 2>&1
 doveadm move -u ${MAILDIRUSER} learn_notspam/processing mailbox learn_notspam ALL
 doveadm flags add -u ${MAILDIRUSER} '\Seen' mailbox learn_notspam/processing ALL
-/usr/bin/bogofilter -d /app/bogofilter/ \
+/usr/bin/bogofilter -d /app/bogofilter/${MAILDIRUSER}/ \
   -Sn \
   -B \
   -v \
@@ -36,7 +36,7 @@ echo Learn spam
 (doveadm mailbox create -u ${MAILDIRUSER} learn_spam/processing || true) > /dev/null 2>&1
 doveadm move -u ${MAILDIRUSER} learn_spam/processing mailbox learn_spam ALL
 doveadm flags add -u ${MAILDIRUSER} '\Seen' mailbox learn_spam/processing ALL
-/usr/bin/bogofilter -d /app/bogofilter/ \
+/usr/bin/bogofilter -d /app/bogofilter/${MAILDIRUSER}/ \
   -Ns \
   -B \
   -v \
