@@ -3,6 +3,7 @@
 /dovecot/*
 /getmailrc/*.getmailrc
 /data/bogofilter/wordlist.db
+/data/bogofilter/*/wordlist.db
 /data/getmail/oldmail*
 /mails/*
 !/mails/johndoe
