@@ -27,7 +27,7 @@ for RCFILE in $(ls -1 ${GETMAILDIR}/*.getmailrc); do
   /usr/bin/timeout -k 15m 10m \
     /usr/bin/getmail \
     --getmaildir /app/getmail \
-    --verbose \
+    --quiet \
     --rcfile $RCFILE
   STATUS=$?
   if [ $STATUS -gt 0 ]; then
