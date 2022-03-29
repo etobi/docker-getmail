@@ -3,6 +3,10 @@
 MAILDIRUSER="$1"
 LOCKFILE="/tmp/bogoLearnHam.lock"
 
+if [ ! -f /app/bogofilter/${MAILDIRUSER}/wordlist.db ] ; then
+  exit;
+fi
+
 if [ -f ${LOCKFILE} ] ; then
   # the lock file already exists, so what to do?
   if [ "$(ps -p `cat ${LOCKFILE}` | grep -v PID | wc -l)" -gt 0 ]; then
