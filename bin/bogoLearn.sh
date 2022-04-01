@@ -7,6 +7,11 @@ if [ ! -f /app/bogofilter/${MAILDIRUSER}/wordlist.db ] ; then
   exit;
 fi
 
+timestamp()
+{
+ date +"%Y-%m-%d %T"
+}
+
 if [ -f ${LOCKFILE} ] ; then
   # the lock file already exists, so what to do?
   if [ "$(ps -p `cat ${LOCKFILE}` | grep -v PID | wc -l)" -gt 0 ]; then
@@ -46,8 +51,5 @@ doveadm flags add -u ${MAILDIRUSER} '\Seen' mailbox learn_spam/processing ALL
   -v \
   /srv/mail/${MAILDIRUSER}/Maildir/.learn_spam.processing/{cur,new}/
 doveadm move -u ${MAILDIRUSER} Junk mailbox learn_spam/processing ALL
-
-echo delete ${MAILDIRUSER} old spam
-doveadm expunge -u ${MAILDIRUSER} mailbox Junk savedbefore 60d
 
 rm ${LOCKFILE}

@@ -4,3 +4,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # m h dom mon dow user command
 * * * * * root /app/bin/rungetmail.sh 1> /var/log/stdout 2>&1
 */5 * * * * root sh -c "ls -1 '/srv/mail/' | xargs -I _ /app/bin/bogoLearn.sh _" 1> /var/log/stdout 2>&1
+5 0 * * * root sh -c "ls -1 '/srv/mail/' | xargs -I _ /app/bin/cleanupJunk.sh _" 1> /var/log/stdout 2>&1
