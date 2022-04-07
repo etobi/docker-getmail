@@ -284,7 +284,7 @@
 
 
 # cat /app/bogofilter/ignorelist.txt | xargs -I _ sh -c "echo _ | bogoutil -l /app/bogofilter/ignorelist.db"
-wordlist i,ignore,/app/bogofilter/ignorelist.db,1
+# wordlist i,ignore,/app/bogofilter/ignorelist.db,1
 wordlist i,ignore,~/ignorelist.db,2
 wordlist r,wordlist,~/wordlist.db,3
 
