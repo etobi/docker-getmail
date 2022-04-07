@@ -283,10 +283,10 @@
 
 
 
-# cat /app/bogofilter/ignorelist.txt | xargs -I _ sh -c "echo _ | bogoutil -l /app/bogofilter/ignorelist.db"
-# wordlist i,ignore,/app/bogofilter/ignorelist.db,1
-wordlist i,ignore,~/ignorelist.db,2
-wordlist r,wordlist,~/wordlist.db,3
+# --> bogoutil -l ignorelist.db < ignorelist.txt
+wordlist I,global,/app/bogofilter/ignorelist.db,1
+wordlist I,user,ignorelist.db,2
+wordlist R,user,wordlist.db,3
 
 spam_subject_tag=
 unsure_subject_tag=
