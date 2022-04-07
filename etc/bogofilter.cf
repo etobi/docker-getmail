@@ -284,9 +284,9 @@
 
 
 # --> bogoutil -l ignorelist.db < ignorelist.txt
-wordlist I,global,/app/bogofilter/ignorelist.db,1
-wordlist I,user,ignorelist.db,2
-wordlist R,user,wordlist.db,3
+# wordlist I,global,/app/bogofilter/ignorelist.db,1
+# wordlist I,user,ignorelist.db,2
+# wordlist R,user,wordlist.db,3
 
 spam_subject_tag=
 unsure_subject_tag=
