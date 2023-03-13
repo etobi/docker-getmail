@@ -27,49 +27,87 @@ fi
 
 echo $$ > ${LOCKFILE}
 
-
-echo Learn ${MAILDIRUSER} Not spam
+echo prepare ${MAILDIRUSER} mailboxes
+(doveadm mailbox create -u ${MAILDIRUSER} Junk || true) > /dev/null 2>&1
+(doveadm mailbox create -u ${MAILDIRUSER} learn_spam || true) > /dev/null 2>&1
+(doveadm mailbox create -u ${MAILDIRUSER} learn_spam/processing || true) > /dev/null 2>&1
 (doveadm mailbox create -u ${MAILDIRUSER} learn_notspam || true) > /dev/null 2>&1
 (doveadm mailbox create -u ${MAILDIRUSER} learn_notspam/processing || true) > /dev/null 2>&1
-doveadm move -u ${MAILDIRUSER} learn_notspam/processing MAILBOX 'learn_notspam' ALL
-doveadm flags add -u ${MAILDIRUSER} '\Seen $NotJunk NotJunk' MAILBOX 'learn_notspam/processing' ALL
-doveadm flags remove -u ${MAILDIRUSER} '\Flagged $MailFlagBit0 $MailFlagBit2' MAILBOX 'learn_notspam/processing' ALL
-/usr/bin/bogofilter -d /app/bogofilter/${MAILDIRUSER}/ \
+(doveadm mailbox create -u ${MAILDIRUSER} Archive || true) > /dev/null 2>&1
+
+
+echo Learn ${MAILDIRUSER} Not spam
+doveadm move \
+  -u ${MAILDIRUSER} \
+  learn_notspam/processing \
+  MAILBOX 'learn_notspam' ALL
+doveadm flags add \
+  -u ${MAILDIRUSER} \
+  '\Seen $NotJunk NotJunk' \
+  MAILBOX 'learn_notspam/processing' ALL
+doveadm flags remove \
+  -u ${MAILDIRUSER} \
+  '\Flagged $MailFlagBit0 $MailFlagBit2' \
+  MAILBOX 'learn_notspam/processing' ALL
+/usr/bin/bogofilter \
+  -d /app/bogofilter/${MAILDIRUSER}/ \
   -Sn \
   -B \
   -v \
   /srv/mail/${MAILDIRUSER}/Maildir/.learn_notspam.processing/{cur,new}/
-doveadm move -u ${MAILDIRUSER} INBOX MAILBOX 'learn_notspam/processing' ALL
+doveadm move \
+  -u ${MAILDIRUSER} \
+  INBOX \
+  MAILBOX 'learn_notspam/processing' ALL
 
 
 echo Learn ${MAILDIRUSER} spam
-(doveadm mailbox create -u ${MAILDIRUSER} Junk || true) > /dev/null 2>&1
-(doveadm mailbox create -u ${MAILDIRUSER} learn_spam || true) > /dev/null 2>&1
-(doveadm mailbox create -u ${MAILDIRUSER} learn_spam/processing || true) > /dev/null 2>&1
-doveadm move -u ${MAILDIRUSER} 'learn_spam/processing' MAILBOX 'learn_spam' ALL
-doveadm flags add -u ${MAILDIRUSER} '\Seen' MAILBOX 'learn_spam/processing' ALL
-doveadm flags remove -u ${MAILDIRUSER} '\Flagged $MailFlagBit0 $MailFlagBit2 $NotJunk NotJunk' MAILBOX 'learn_notspam/processing' ALL
-/usr/bin/bogofilter -d /app/bogofilter/${MAILDIRUSER}/ \
+doveadm move \
+  -u ${MAILDIRUSER} \
+  'learn_spam/processing' \
+  MAILBOX 'learn_spam' ALL
+doveadm flags add \
+  -u ${MAILDIRUSER} \
+  '\Seen' \
+  MAILBOX 'learn_spam/processing' ALL
+doveadm flags remove \
+  -u ${MAILDIRUSER} \
+  '\Flagged $MailFlagBit0 $MailFlagBit2 $NotJunk NotJunk' \
+  MAILBOX 'learn_notspam/processing' ALL
+/usr/bin/bogofilter \
+  -d /app/bogofilter/${MAILDIRUSER}/ \
   -Ns \
   -B \
   -v \
   /srv/mail/${MAILDIRUSER}/Maildir/.learn_spam.processing/{cur,new}/
-doveadm move -u ${MAILDIRUSER} Junk MAILBOX learn_spam/processing ALL
+doveadm move \
+  -u ${MAILDIRUSER} \
+  Junk \
+  MAILBOX learn_spam/processing ALL
 
 
 echo Learn ${MAILDIRUSER} archived unsure mails as ham
-(doveadm mailbox create -u ${MAILDIRUSER} Archive || true) > /dev/null 2>&1
+doveadm flags add \
+  -u ${MAILDIRUSER} '$bogoLearnAsHam' \
+  MAILBOX 'Archive' SAVEDSINCE 1h HEADER "X-Bogosity" "Unsure" UNKEYWORD '$bogoLearnedAsHam'
 
-doveadm flags add -u ${MAILDIRUSER} '$bogoLearnAsHam' MAILBOX 'Archive' SAVEDSINCE 1h HEADER "X-Bogosity" "Unsure" UNKEYWORD '$bogoLearnedAsHam'
-
-doveadm fetch -u ${MAILDIRUSER} guid MAILBOX 'Archive' KEYWORD '$bogoLearnAsHam' \
+doveadm fetch \
+  -u ${MAILDIRUSER} \
+  guid \
+  MAILBOX 'Archive' KEYWORD '$bogoLearnAsHam' \
   | grep 'guid:' \
   | awk -F': ' '{print $2}' \
-  | xargs -I _ sh -c "doveadm fetch -u ${MAILDIRUSER} text MAILBOX 'Archive' GUID '_' | bogofilter -d /app/bogofilter/${MAILDIRUSER}/ -Sn -v"
+  | xargs -I _ \
+  sh -c "doveadm fetch -u ${MAILDIRUSER} text MAILBOX 'Archive' GUID '_' | bogofilter -d /app/bogofilter/${MAILDIRUSER}/ -Sn -v"
 
-doveadm flags add -u ${MAILDIRUSER} '$bogoLearnedAsHam' MAILBOX 'Archive' KEYWORD '$bogoLearnAsHam'
-doveadm flags remove -u ${MAILDIRUSER} '$bogoLearnAsHam' MAILBOX 'Archive' KEYWORD '$bogoLearnedAsHam'
-
+doveadm flags add \
+  -u ${MAILDIRUSER} \
+  '$bogoLearnedAsHam' \
+  MAILBOX 'Archive' KEYWORD '$bogoLearnAsHam'
+doveadm flags remove \
+  -u ${MAILDIRUSER} \
+  '$bogoLearnAsHam' \
+  MAILBOX 'Archive' KEYWORD '$bogoLearnedAsHam'
 
 rm ${LOCKFILE}
 
