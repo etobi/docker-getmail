@@ -23,7 +23,7 @@ fi
 echo $$ > /tmp/rungetmail.lock
 
 for RCFILE in $(ls -1 ${GETMAILDIR}/*.getmailrc); do
-  echo `timestamp` $RCFILE
+  # echo `timestamp` $RCFILE
   /usr/bin/timeout -k 15m 10m \
     /usr/bin/getmail \
     --getmaildir /app/getmail \
