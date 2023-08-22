@@ -9,7 +9,8 @@ timestamp()
 
 if [ -f /tmp/rungetmail.lock ] ; then
   # the lock file already exists, so what to do?
-  if [ "$(ps -p `cat /tmp/rungetmail.lock` | grep -v PID | wc -l)" -gt 0 ]; then
+  PID=`cat /tmp/rungetmail.lock`
+  if kill -0 $PID 2> /dev/null; then
     # process is still running
     echo `timestamp` "$0: quit at start: lingering process `cat /tmp/rungetmail.lock`"
     exit 0
