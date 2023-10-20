@@ -9,6 +9,7 @@ RUN apt update -qq \
     getmail \
     bogofilter \
     curl \
+    netcat \
     && rm -fr /var/lib/apt/lists
 
 RUN ln -sf /usr/share/zoneinfo/${TZ:-UTC} /etc/localtime
