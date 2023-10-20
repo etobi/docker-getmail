@@ -5,4 +5,4 @@ echowithdate()
     echo `date +%c`:: $*
 }
 
-echowithdate "rs02: $1 - Bogo: $2 - From: $3" >> /srv/mail/statsd.log
+echowithdate "rs02: $1 - bogo: $2 - from: $3" >> /srv/mail/statsd.log
