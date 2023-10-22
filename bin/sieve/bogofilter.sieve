@@ -22,5 +22,3 @@ if anyof(
     fileinto :create "Junk";
     stop;
 }
-
-keep;
