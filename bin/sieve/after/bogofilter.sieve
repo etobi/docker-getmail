@@ -7,13 +7,6 @@ if allof(
     stop;
 }
 
-if allof(
-    header :contains "X-Spam" "Yes",
-    header :contains "X-Bogosity" "Yes"
-) {
-    addflag "\\Seen";
-}
-
 if anyof(
     header :contains "X-Spam-Status" "Yes,",
     header :contains "X-Bogosity" "Yes,",
@@ -22,3 +15,5 @@ if anyof(
     fileinto :create "Junk";
     stop;
 }
+
+keep;
