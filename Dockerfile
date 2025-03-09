@@ -1,4 +1,4 @@
-FROM dovecot/dovecot
+FROM dovecot/dovecot:2.3-latest
 
 ENV TZ="Europe/Berlin"
 
